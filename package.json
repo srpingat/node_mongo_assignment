@@ -11,9 +11,10 @@
     "crud",
     "mongodb"
   ],
-  "author": "akshay kashyap",
+  "author": "shrutiRP",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -21,10 +22,13 @@
     "dotenv": "^8.6.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "html-pdf": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.11",
     "mongoose-paginate-v2": "^1.7.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.6"
+    "nodemailer": "^6.7.7",
+    "nodemon": "^2.0.6",
+    "xlsx": "^0.18.5"
   }
 }

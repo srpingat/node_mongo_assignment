@@ -39,5 +39,76 @@ const myCustomLabels = {
   
   }
 
+  const delete_multi_items=async(req,res)=>{
 
-  module.exports = chkqty1;
+    const {delete_items_id} = req.body ;
+    console.log("2="+delete_items_id);
+    const query = { _id: { $in: delete_items_id} };  
+    await Item.deleteMany(query).then(result => {
+    console.log("Number of Records Deleted : "+ result["n"]);
+    res.status(200).send("Number of Records Deleted : "+ result["n"])
+ 
+})
+.catch(err => {
+    console.log("Error");
+    console.log(err);
+    res.status(400).send('Error in deletion -  '+err);
+});
+
+};
+const update_multi_items=  async (req, res) => {
+
+try {
+  const writeOperations = req.body.map((item) => {
+    return {
+      updateOne: {
+        filter: { _id: item._id },
+        update: { itemname: item.itemname },
+        update: { price: item.price}
+
+      }
+    };
+  });
+
+  await Item.bulkWrite(writeOperations);
+
+  res.json(req.body);
+} catch (e) {
+  res.status(500).json({ message: 'Something went wrong in /edit-order' });
+}
+};
+
+
+const save_multi_items=async(req,res)=>{
+
+const new_multi = new Item(req.body);
+console.log("1="+new_multi);
+
+const new_multi_items = req.body ;
+console.log("2="+new_multi_items);
+
+try{
+      const result1 = await Item.insertMany(new_multi_items);
+      console.log(`${result1.insertedCount} documents were inserted`);     
+      res.status(200).send(result1);
+}catch(err){
+      res.send('Error inserting '+err)
+}
+};
+
+const save_singleitem=async(req,res)=>{
+  const newitem= new Item({
+      itemname: req.body.itemname,
+      price: req.body.price
+  })
+  try{
+        const a1= await newitem.save()
+        res.json(a1)
+  }catch(err){
+        res.send('Error '+err)
+  }
+};
+
+
+
+  module.exports ={index,delete_multi_items,update_multi_items,save_multi_items,save_singleitem};
